@@ -5,6 +5,7 @@ export default {
         input: '单行文本',
         textarea: '多行文本',
         number: '计数器',
+        valnum:'数值',
         radio: '单选框组',
         checkbox: '多选框组',
         time: '时间选择器',
@@ -132,6 +133,9 @@ export default {
         labelSuffix: '表单标签后缀'
       },
       widget: {
+        digit:'数字',
+        process:'进度',
+        imputmethod:'输入方式',
         descriptioned:'功能描述',
         repeat:'不允许重复',
         wordnum:'限定字数',

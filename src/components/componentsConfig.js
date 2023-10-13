@@ -119,6 +119,38 @@ export const basicComponents = [
     }
   },
   {
+    type: 'valnum',
+    icon: 'icon-number',
+    options: {
+      imputmethod:'valnum',
+      width: '',
+      required: false,
+      requiredMessage: '',
+      validatorCheck: false,
+      validator: '',
+      defaultValue: 0,
+      min: 0,
+      max: 9,
+      step: 1,
+      disabled: false,
+      controls: true,
+      controlsPosition: '',
+      customClass: '',
+      labelWidth: 100,
+      isLabelWidth: false,
+      hidden: false,
+      dataBind: true,
+      precision: 0,
+      customProps: {},
+      tip: ''
+    },
+    events: {
+      onChange: '',
+      onFocus: '',
+      onBlur: ''
+    }
+  },
+  {
     type: 'radio',
     icon: 'icon-radio-active',
     options: {
@@ -405,6 +437,7 @@ export const basicComponents = [
     type: 'slider',
     icon: 'icon-slider',
     options: {
+      imputmethod:'slider',
       defaultValue: 0,
       disabled: false,
       required: false,

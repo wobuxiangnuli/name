@@ -356,7 +356,7 @@ export default {
     },
     basicFields: {
       type: Array,
-      default: () => ['input', 'textarea', 'number', 'radio', 'checkbox', 'time', 'date', 'rate', 'color', 'select', 'switch', 'slider', 'text', 'html', 'button', 'link', 'cascader', 'treeselect', 'steps', 'transfer', 'pagination']
+      default: () => ['input', 'textarea', 'number','valnum', 'radio', 'checkbox', 'time', 'date', 'rate', 'color', 'select', 'switch', 'slider', 'text', 'html', 'button', 'link', 'cascader', 'treeselect', 'steps', 'transfer', 'pagination']
     },
     advanceFields: {
       type: Array,

@@ -37,6 +37,18 @@
         v-bind="element.options.customProps"
       ></el-input-number>
     </template>
+<!-- 数值 -->
+    <template v-if="element.type == 'valnum'">
+      <el-input-number 
+        v-model="element.options.defaultValue" 
+        :disabled="element.options.disabled"
+        :controls-position="element.options.controlsPosition"
+        :precision="element.options.precision"
+        :controls="element.options.controls"
+        :style="{width: isTable ? '100%' : element.options.width}"
+        v-bind="element.options.customProps"
+      ></el-input-number>
+    </template>
 
     <template v-if="element.type == 'radio'">
       <el-radio-group v-model="element.options.defaultValue"

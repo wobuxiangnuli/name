@@ -21,18 +21,28 @@
             <template v-else>
               <el-input clearable v-model="data.model"></el-input>
             </template>
-            <!-- 标题 -->
           </el-form-item>
+          <!-- 输入方式切换 -->
+          <el-form-item :label="$t('fm.config.widget.imputmethod')"
+            v-if="data.type == 'valnum'||data.type == 'slider'">
+            <el-select v-model="data.options.imputmethod" @change="changed" >
+                <el-option value="valnum"  :label="$t('fm.config.widget.digit')"></el-option>
+                <el-option value="slider"  :label="$t('fm.config.widget.process')"></el-option>
+              </el-select>
+          </el-form-item>
+          <!-- 标题 -->
           <el-form-item :label="$t('fm.config.widget.name')"
             v-if="data.type != 'grid' && data.type != 'tabs' && data.type != 'collapse' && data.type != 'report' && data.type != 'inline' && data.type != 'td' && data.type != 'th' && data.type != 'col' && data.type != 'alert' && data.type != 'dialog' && data.type != 'card'">
             <el-input clearable v-model="data.name"></el-input>
-            <!-- 单多切换 -->
-            <template v-if="data.type == 'input' || 'textarea'">
-              <el-radio-group @change="changed" v-model="data.options.typechange" class="ml-4">
-                <el-radio label="input" size="large">单行</el-radio>
-                <el-radio label="textarea" size="large">多行</el-radio>
-              </el-radio-group>
-            </template>
+          </el-form-item>
+
+
+          <!-- 单多切换 -->
+          <el-form-item v-if="data.type == 'input' || data.type == 'textarea'">
+            <el-radio-group @change="changed" v-model="data.options.typechange" class="ml-4">
+              <el-radio label="input" size="large">单行</el-radio>
+              <el-radio label="textarea" size="large">多行</el-radio>
+            </el-radio-group>
           </el-form-item>
 
 
@@ -1076,23 +1086,23 @@
                 <el-input class="message-input" clearable v-model="data.options.requiredMessage"
                   v-if="data.options.required" :placeholder="$t('fm.message.errorTip')"></el-input>
               </div>
-<!-- 不允许重复 -->
+              <!-- 不允许重复 -->
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('repeat') >= 0">
                 <el-checkbox v-model="data.options.repeat">{{ $t('fm.config.widget.repeat') }}</el-checkbox>
               </div>
-<!-- 限定字数 -->
+              <!-- 限定字数 -->
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('wordnum') >= 0">
                 <el-checkbox v-model="data.options.wordnum">{{ $t('fm.config.widget.wordnum') }}</el-checkbox>
 
                 <div class="length">
-                  <el-input  class="length-input" type="number"  v-model="data.options.minwordnum"
-                  v-if="data.options.wordnum" :placeholder="$t('fm.message.minnumTip')"></el-input>
-                  <span v-if="data.options.wordnum" >——</span>
-                <el-input class="length-input" type="number"  v-model="data.options.maxwordnum"
-                  v-if="data.options.wordnum" :placeholder="$t('fm.message.maxnumTip')"></el-input>
+                  <el-input class="length-input" type="number" v-model="data.options.minwordnum"
+                    v-if="data.options.wordnum" :placeholder="$t('fm.message.minnumTip')"></el-input>
+                  <span v-if="data.options.wordnum">——</span>
+                  <el-input class="length-input" type="number" v-model="data.options.maxwordnum"
+                    v-if="data.options.wordnum" :placeholder="$t('fm.message.maxnumTip')"></el-input>
                 </div>
               </div>
-<!-- select部分 -->
+              <!-- select部分 -->
               <!-- <div class="validate-block" v-if="Object.keys(data.options).indexOf('dataType')>=0">
               <el-checkbox v-model="data.options.dataTypeCheck" style="margin-right: 10px;"></el-checkbox>
               <el-select :disabled="!data.options.dataTypeCheck" v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" >
@@ -1108,8 +1118,10 @@
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
                 <el-checkbox v-model="data.options.patternCheck" @click="setregular">{{ $t('fm.config.widget.Regular')
                 }}</el-checkbox>
-                <el-input disabled="true" class="message-input" v-if="data.options.patternCheck" clearable v-model="data.options.RegularMessage"></el-input>
-                <RegularDialog ref="regularDialog" @on-confirm="handleRegular" :dataAll="this.data.options"></RegularDialog>
+                <el-input disabled="true" class="message-input" v-if="data.options.patternCheck" clearable
+                  v-model="data.options.RegularMessage"></el-input>
+                <RegularDialog ref="regularDialog" @on-confirm="handleRegular" :dataAll="this.data.options">
+                </RegularDialog>
                 <!-- <el-checkbox v-model="data.options.patternCheck" style="margin-right: 10px;"></el-checkbox>
                 <el-input clearable :disabled="!data.options.patternCheck"  v-model.lazy="data.options.pattern"  style=" width: 239px;" :placeholder="$t('fm.config.widget.patternPlaceholder')"></el-input>
               <el-input class="message-input" clearable  v-model="data.options.patternMessage" v-if="data.options.patternCheck"  :placeholder="$t('fm.message.errorTip')"></el-input> -->
@@ -1134,9 +1146,11 @@
                 @on-edit="handleEventEdit" @on-remove="handleEventRemove"></event-config>
             </el-form-item>
           </template>
-           <!-- 控件功能描述 -->
-           <el-form-item :label="$t('fm.config.widget.descriptioned')" v-if="Object.keys(data.options).indexOf('descriptioned') >= 0">
-            <el-input type="textarea" rows="3" :placeholder="$t('fm.message.errorTip')"  clearable v-model="data.options.descriptioned   "></el-input>
+          <!-- 控件功能描述 -->
+          <el-form-item :label="$t('fm.config.widget.descriptioned')"
+            v-if="Object.keys(data.options).indexOf('descriptioned') >= 0">
+            <el-input type="textarea" rows="3" :placeholder="$t('fm.message.errorTip')" clearable
+              v-model="data.options.descriptioned"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -1159,7 +1173,7 @@
       <code-dialog ref="defaultValueDialog" width="800px" code-height="400px" mode="javascript"
         :title="$t('fm.config.widget.defaultValue')" @on-confirm="handleDefaultValueConfirm"></code-dialog>
     </div>
-    
+
   </el-scrollbar>
 </template>
 
@@ -1194,13 +1208,13 @@ export default {
       validator: {
         type: null,
         required: null,
-        repeat:null,
+        repeat: null,
         pattern: null,
         range: null,
         length: null,
         validator: null,
       },
-      regularlist:{},
+      regularlist: {},
       editorVisible: false,
       tableVisible: false,
       customClassArray: this.data && this.data.options && this.data.options.customClass ? this.data.options.customClass.split(' ').filter(item => item) : []
@@ -1219,17 +1233,17 @@ export default {
     this.validateDataType(this.data && this.data.options ? this.data.options.dataType : '')
     this.valiatePattern(this.data && this.data.options ? this.data.options.pattern : '')
     this.validateCustom(this.data && this.data.options ? this.data.options.validator : '')
-  
+
   },
   methods: {
-    handleRegular(value){
+    handleRegular(value) {
       this.regularlist = {}
       this.data.options.RegularMessage = value.label
       this.regularlist = value
       console.log(this.regularlist);
       this.data.Regular = true
       this.data.Regulared = true
-      
+
     },
     setwidth(label) {
       switch (label) {
@@ -1253,12 +1267,11 @@ export default {
           break;
       }
     },
-    changed(type, label) {
-      this.data.type = type
-      if (this.data.type == 'input') {
-        this.data.name = '单行文本'
-      } else {
-        this.data.name = '多行文本'
+    changed(type) {
+      console.log(type);
+      this.data.type = type 
+      if (type == 'input'||type == 'textarea') {
+        this.data.name = type == 'input'?'单行文本':'多行文本'
       }
     },
     setregular() {
@@ -1463,7 +1476,7 @@ export default {
     handleSetTree() {
       this.$refs.treeDialog.open(this.data.options.options)
     },
-   
+
     handleTreeConfirm(value) {
       try {
         if (typeof value == 'string') {
@@ -1525,7 +1538,7 @@ export default {
         this.generateRule()
       })
     },
-  
+
     validateDataType(val) {
       if (!this.show) {
         return false
@@ -1545,7 +1558,7 @@ export default {
       }
 
       if (val && (this.data.options.patternCheck || !Object.keys(this.data.options).includes('patternCheck'))) {
-        this.validator.pattern = { pattern: this.regularlist.value, message: this.regularlist.tip ? this.regularlist.tip: '' }
+        this.validator.pattern = { pattern: this.regularlist.value, message: this.regularlist.tip ? this.regularlist.tip : '' }
       } else {
         this.validator.pattern = null
       }
@@ -1619,7 +1632,7 @@ export default {
     'data.options.requiredMessage': function (val) {
       this.validateRequired(this.data && this.data.options ? this.data.options.required : false)
     },
- 
+
     'data.options.dataType': function (val) {
       this.validateDataType(val)
     },
@@ -1635,10 +1648,10 @@ export default {
     'data.options.patternCheck': function (val) {
       this.valiatePattern(this.data && this.data.options ? this.data.options.pattern : '')
     },
-   
+
     'data.options.patternMessage': function (val) {
       this.valiatePattern(this.data && this.data.options ? this.data.options.pattern : '')
-    }, 
+    },
     'data.options.validator': function (val) {
       this.validateCustom(val)
     },
@@ -1672,13 +1685,14 @@ export default {
 }
 </script>
 <style lang="scss">
-.length{
+.length {
   width: 100%;
   margin: 0 auto;
 }
-.length-input{
-  width:35%;
-  margin:0 10px 0 10px;
-  
+
+.length-input {
+  width: 35%;
+  margin: 0 10px 0 10px;
+
 }
 </style>
