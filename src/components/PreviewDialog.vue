@@ -64,7 +64,7 @@ import request from '../util/request.js'
 import { consoleError } from '../util/index'
 import { ElMessage } from 'element-plus'
 import PreviewPdf from './PreviewPdf.vue'
-import base from '../util/base'
+
 
 
 export default {

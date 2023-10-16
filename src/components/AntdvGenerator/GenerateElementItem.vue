@@ -500,7 +500,6 @@
 </template>
 
 <script>
-import { validatedrepeat } from '../../util/index'
 import FmUpload from '../Upload/index.vue'
 import FmFormTable from './FormTable.vue'
 import FmFileUpload from '../Upload/file.vue'
@@ -780,9 +779,6 @@ export default {
     },
     handleOnFocus() {
       this.execFunction('onFocus', {})
-      if (this.widget.options.repeat) {
-        this.widget.rules.push({ validator:validatedrepeat(this.modelValue)})
-      }
       console.log(this.widget);
     },
     handleOnBlur() {

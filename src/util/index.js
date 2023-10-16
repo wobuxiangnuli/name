@@ -172,12 +172,12 @@ export const getBindModels = (models, binds) => {
 
   return resData
 }
-export const validatedrepeat = (data) =>{
+export const validatedrepeat = (rule,value,callback) =>{
   return new Promise((resolve, reject) => {
-    if (data == '张三') {
-      resolve()
-    }else{
+    if (value == '里斯') {
       reject('已存在')
+    }else{
+      resolve()
     }
   })
   

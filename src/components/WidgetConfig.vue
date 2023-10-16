@@ -1129,7 +1129,7 @@
               <!-- 自定义检验规则 -->
               <!-- <div class="validate-block" v-if="Object.keys(data.options).indexOf('validator')>=0">
               <el-checkbox v-model="data.options.validatorCheck" style="margin-right: 10px;">{{$t('fm.config.widget.customValidation')}}</el-checkbox>
- 自定义检验规则框
+
               <div v-if="data.options.validatorCheck">
                 <div style="font-size: 14px;font-weight: 500;" class="code-line">(rule, value, callback) => {</div>
                 <code-editor mode="javascript" :key="data.key" v-model="data.options.validator" height="150px"></code-editor>
@@ -1178,6 +1178,7 @@
 </template>
 
 <script>
+import { validatedrepeat } from '../util/index'
 import Draggable from 'vuedraggable/src/vuedraggable'
 import RegularDialog from '../components/regular/dialog.vue'
 import CodeEditor from '../components/CodeEditor/index.vue'
@@ -1213,6 +1214,7 @@ export default {
         range: null,
         length: null,
         validator: null,
+        
       },
       regularlist: {},
       editorVisible: false,
@@ -1230,6 +1232,7 @@ export default {
   },
   mounted() {
     this.validateRequired(this.data && this.data.options ? this.data.options.required : false)
+    this.validateRepeat(this.data && this.data.options ? this.data.options.required : '')
     this.validateDataType(this.data && this.data.options ? this.data.options.dataType : '')
     this.valiatePattern(this.data && this.data.options ? this.data.options.pattern : '')
     this.validateCustom(this.data && this.data.options ? this.data.options.validator : '')
@@ -1538,6 +1541,17 @@ export default {
         this.generateRule()
       })
     },
+    validateRepeat(val) {
+      if (val) {
+        this.validator.required = { validator: validatedrepeat}
+      } else {
+        this.validator.repeat = null
+      }
+
+      this.$nextTick(() => {
+        this.generateRule()
+      })
+    },
 
     validateDataType(val) {
       if (!this.show) {
@@ -1626,6 +1640,9 @@ export default {
         }
       }
     },
+    'data.options.repeat': function (val) {
+      this.validateRepeat(val)
+    },
     'data.options.required': function (val) {
       this.validateRequired(val)
     },
@@ -1684,15 +1701,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.length {
-  width: 100%;
-  margin: 0 auto;
-}
-
-.length-input {
-  width: 35%;
-  margin: 0 10px 0 10px;
-
-}
-</style>
