@@ -357,6 +357,8 @@ export default {
     },
     // 内容改变时触发
     _changeFormValue (value, field) {
+      console.log(this.models,360)
+      console.log(this.data,361)
       this.models[field] = value
       this.$emit('on-change', field, value, this.models)
     },
@@ -382,6 +384,7 @@ export default {
       this.resetModels = _.cloneDeep(this.models)
 
       this.models = {...this.models}
+      
 
       this.$nextTick(() => {
         this.formShow = true

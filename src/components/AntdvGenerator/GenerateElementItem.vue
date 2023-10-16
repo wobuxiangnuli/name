@@ -62,7 +62,7 @@
       </template>
     </template>
 
-    <template v-if="widget.type == 'number'">
+    <template v-if="widget.type == 'number'||widget.type == 'valnum'">
       <template v-if="printRead">
         <span>{{ dataModel.toFixed(widget.options.precision) }}</span>
       </template>
@@ -72,9 +72,13 @@
           :max="widget.options.max" :controls-position="widget.options.controlsPosition"
           :precision="widget.options.precision" :controls="widget.options.controls" :ref="'fm-' + widget.model"
           :size="config.size" v-bind="widget.options.customProps" @focus="handleOnFocus"
-          @blur="handleOnBlur"></a-input-number>
+          @blur="handleOnBlur" :formatter="formatter"
+          >  </a-input-number>
+          <input type="hidden" :name="this.widget.model+'_biaoji'" :value=" this.widget.options.unitMessage"/>
+         
       </template>
     </template>
+    
 
     <template v-if="widget.type == 'radio'">
       <template v-if="printRead">
@@ -584,8 +588,8 @@ export default {
               this.$emit('update:modelValue', val)
             }
           },
-          modelValue(val) {
-            this.dataModel = val
+          modelValue(val) {  
+            this.dataModel = val  
           }
         },
         methods: {
@@ -642,6 +646,7 @@ export default {
     }
   },
   mounted() {
+  
     this.generateComponentInstance && this.generateComponentInstance(
       this.fieldNode,
       this.$refs['fm-' + this.widget.model]
@@ -651,6 +656,11 @@ export default {
     this.deleteComponentInstance && this.deleteComponentInstance(this.fieldNode)
   },
   methods: {
+    formatter(value){
+      let str = value.toString()
+      str = this.widget.options.unitMessage + str
+      return str
+    },
     handleOnDynamicEvent() {
       let currentEvents = {}
 
@@ -779,7 +789,6 @@ export default {
     },
     handleOnFocus() {
       this.execFunction('onFocus', {})
-      console.log(this.widget);
     },
     handleOnBlur() {
       this.execFunction('onBlur', {})
@@ -889,10 +898,8 @@ export default {
     modelValue(val) {
       this.dataModel = val
     },
-
     dataModel(val, oldValue) {
       this.$emit('update:modelValue', val)
-
     },
     'remoteOption': {
       deep: true,

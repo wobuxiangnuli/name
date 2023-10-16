@@ -23,12 +23,11 @@
             </template>
           </el-form-item>
           <!-- 输入方式切换 -->
-          <el-form-item :label="$t('fm.config.widget.imputmethod')"
-            v-if="data.type == 'valnum'||data.type == 'slider'">
-            <el-select v-model="data.options.imputmethod" @change="changed" >
-                <el-option value="valnum"  :label="$t('fm.config.widget.digit')"></el-option>
-                <el-option value="slider"  :label="$t('fm.config.widget.process')"></el-option>
-              </el-select>
+          <el-form-item :label="$t('fm.config.widget.imputmethod')" v-if="data.type == 'valnum' || data.type == 'slider'">
+            <el-select v-model="data.options.imputmethod" @change="changed">
+              <el-option value="valnum" :label="$t('fm.config.widget.digit')"></el-option>
+              <el-option value="slider" :label="$t('fm.config.widget.process')"></el-option>
+            </el-select>
           </el-form-item>
           <!-- 标题 -->
           <el-form-item :label="$t('fm.config.widget.name')"
@@ -168,11 +167,23 @@
             v-if="Object.keys(data.options).indexOf('autosize') >= 0">
             <el-switch v-model="data.options.autosize"></el-switch>
           </el-form-item>
-
+<!-- 精度 -->
           <el-form-item :label="$t('fm.config.widget.precision')"
             v-if="Object.keys(data.options).indexOf('precision') >= 0">
             <el-input-number v-model="data.options.precision" :min="0" :max="99999" :step="1"></el-input-number>
           </el-form-item>
+<!-- 单位 -->
+          <el-form-item :label="$t('fm.config.widget.unit')"
+            v-if="data.type == 'valnum'&&Object.keys(data.options).indexOf('unit') >= 0">
+            <el-select style="width:30%" v-model="data.options.unit">
+              <el-option value="prefix" :label="$t('fm.config.widget.prefix')"></el-option>
+              <el-option value="suffix" :label="$t('fm.config.widget.suffix')"></el-option>
+            </el-select>
+            <el-input v-model="data.options.unitMessage" style="width:70%"></el-input>
+          </el-form-item>
+
+
+
 
           <el-form-item :label="$t('fm.config.widget.controls')"
             v-if="Object.keys(data.options).indexOf('controls') >= 0">
@@ -668,8 +679,8 @@
             <el-color-picker v-if="data.type == 'color'" v-model="data.options.defaultValue"
               :show-alpha="data.options.showAlpha"></el-color-picker>
             <el-switch v-if="data.type == 'switch'" v-model="data.options.defaultValue"></el-switch>
-            <el-input-number v-if="data.type == 'number'" v-model="data.options.defaultValue" :step="data.options.step"
-              :min="data.options.min" :max="data.options.max"></el-input-number>
+            <el-input-number v-if="data.type == 'number' || data.type == 'valnum'" v-model="data.options.defaultValue"
+              :step="data.options.step" :min="data.options.min" :max="data.options.max"></el-input-number>
 
             <el-input-number v-if="data.type == 'pagination'" v-model="data.options.defaultValue" :step="1" :min="1" />
 
@@ -1214,7 +1225,7 @@ export default {
         range: null,
         length: null,
         validator: null,
-        
+
       },
       regularlist: {},
       editorVisible: false,
@@ -1243,7 +1254,6 @@ export default {
       this.regularlist = {}
       this.data.options.RegularMessage = value.label
       this.regularlist = value
-      console.log(this.regularlist);
       this.data.Regular = true
       this.data.Regulared = true
 
@@ -1271,10 +1281,9 @@ export default {
       }
     },
     changed(type) {
-      console.log(type);
-      this.data.type = type 
-      if (type == 'input'||type == 'textarea') {
-        this.data.name = type == 'input'?'单行文本':'多行文本'
+      this.data.type = type
+      if (type == 'input' || type == 'textarea') {
+        this.data.name = type == 'input' ? '单行文本' : '多行文本'
       }
     },
     setregular() {
@@ -1543,7 +1552,7 @@ export default {
     },
     validateRepeat(val) {
       if (val) {
-        this.validator.required = { validator: validatedrepeat}
+        this.validator.required = { validator: validatedrepeat }
       } else {
         this.validator.repeat = null
       }

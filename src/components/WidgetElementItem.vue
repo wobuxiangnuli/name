@@ -47,7 +47,7 @@
         :controls="element.options.controls"
         :style="{width: isTable ? '100%' : element.options.width}"
         v-bind="element.options.customProps"
-      ></el-input-number>
+      > </el-input-number>
     </template>
 
     <template v-if="element.type == 'radio'">

@@ -122,7 +122,6 @@ const setex = (index) => {
 const check = (text) =>{
     let alert = document.getElementsByClassName('alert')
     let ex= el.value.value
-    console.log(alert);
     if (el.value == '') {
         
     }else{

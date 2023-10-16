@@ -341,13 +341,16 @@ export default {
     this._initForm()
   },
   mounted () {
+    
     const _this = this
 
     this.$nextTick(() => {
       this.eventFunction['mounted'] && this.eventFunction['mounted']()
+      
     })
   },
   beforeUnmount () {
+    
     let head = '.fm-' + this.formStyleKey + ' '
     clearStyleSheets(head)
   },
@@ -391,6 +394,7 @@ export default {
       this.resetModels = _.cloneDeep(this.models)
 
       this.models = {...this.models}
+      
 
       this.$nextTick(() => {
         this.formShow = true
@@ -1028,11 +1032,11 @@ export default {
       })
     },
     getData (isValidate = true) {
+      
       return new Promise((resolve, reject) => {
         if (isValidate) {
           this.$refs[this.formRef].validate(valid => {
             if (valid) {
-              
               resolve(getBindModels(this.models, this.dataBindFields))
             } else {
               reject(new Error(this.$t('fm.message.validError')).message)

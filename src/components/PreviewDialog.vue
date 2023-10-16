@@ -112,7 +112,6 @@ export default {
       this.formEdit = this.previewVisible = true
       this.printRead = false
       this.showQrcode = false
-
       this.platform = platform
 
       this.$nextTick(() => {

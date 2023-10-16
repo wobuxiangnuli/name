@@ -1,85 +1,49 @@
 <template>
   <div class="fm-form-item" :data-id="widget.model" v-if="widget.key">
-    <a-form-item 
-      v-if="widget.type != 'divider' && widget.type != 'alert' &&  (isSubform || isTable ? display[widget.model] && !subHideFields[rowIndex][widget.model] : display[widget.model])" 
-      :name="fieldNode ? [...fieldNode.split('.'), widget.model] : widget.model"
-      :rules="rules[ruleProp]"
-      :class="{
-        [widget.options && widget.options.customClass]: widget.options && widget.options.customClass?true: false,
+    <a-form-item
+      v-if="widget.type != 'divider' && widget.type != 'alert' && (isSubform || isTable ? display[widget.model] && !subHideFields[rowIndex][widget.model] : display[widget.model])"
+      :name="fieldNode ? [...fieldNode.split('.'), widget.model] : widget.model" :rules="rules[ruleProp]" :class="{
+        [widget.options && widget.options.customClass]: widget.options && widget.options.customClass ? true : false,
         'no-label-form-item': widget.options.isLabelWidth && widget.options.labelWidth == 0,
         'no-label-left': widget.name === '',
         'fm-label-wrap': widget.options.labelWrap
-      }"
-      :label="(widget.options.hideLabel || (isTable && !isMobile)) ? '' : widget.name"
-      :key="widget.key"
-      :required="widget.options.required"
-      ref="generateFormItem"
-      :colon="config?.labelSuffix ? true : false"
-      validateFirst
-      
-    >
+      }" :label="(widget.options.hideLabel || (isTable && !isMobile)) ? '' : widget.name" :key="widget.key"
+      :required="widget.options.required" ref="generateFormItem" :colon="config?.labelSuffix ? true : false"
+      validateFirst>
       <div v-if="widget.options.tip" class="fm-item-tooltip" v-html="widget.options.tip.replace(/\n/g, '<br/>')"></div>
-      <generate-element-item 
-        :blanks="blanks" 
-        :is-table="isTable" 
-        :table-name="tableName"
-        :widget="widget" 
-        :models="dataModels"
-        :remote="remote"
+      <generate-element-item :blanks="blanks" :is-table="isTable" :table-name="tableName" :widget="widget"
+        :models="dataModels" :remote="remote"
         :edit="edit && (isSubform || isTable ? !subDisabledFields[rowIndex][widget.model] : true)"
-        :remote-option="remoteOption"
-        :key="widget.key"
-        :rules="rules"
-        v-model="dataModel"
-        :platform="platform"
-        :preview="preview"
-        :data-source-value="dataSourceValue"
-        :event-function="eventFunction"
-        :container-key="containerKey"
-        :print-read="printRead"
-        :config="config"
-        :is-subform="isSubform"
-        :row-index="rowIndex"
-        :sub-name="subName"
-        :is-dialog="isDialog"
-        :dialog-name="dialogName"
-        ref="generateElementItem"
-        :is-group="isGroup"
-        :group="group"
-        :field-node="fieldNode ? fieldNode + '.' + widget.model : widget.model"
-      >
-        
+        :remote-option="remoteOption" :key="widget.key" :rules="rules" v-model="dataModel" :platform="platform"
+        :preview="preview" :data-source-value="dataSourceValue" :event-function="eventFunction"
+        :container-key="containerKey" :print-read="printRead" :config="config" :is-subform="isSubform"
+        :row-index="rowIndex" :sub-name="subName" :is-dialog="isDialog" :dialog-name="dialogName"
+        ref="generateElementItem" :is-group="isGroup" :group="group"
+        :field-node="fieldNode ? fieldNode + '.' + widget.model : widget.model">
+
         <template v-slot:[blank.name]="scope" v-for="blank in blanks">
           <slot :name="blank.name" :model="scope.model"></slot>
         </template>
       </generate-element-item>
     </a-form-item>
 
-    <a-form-item v-if="widget.type == 'divider' && (isSubform || isTable ? display[widget.model] && !subHideFields[rowIndex][widget.model] : display[widget.model])" :wrapperCol="{span: 0, offset: 0}">
-      <a-divider 
-        :orientation="widget.options.contentPosition"
-        v-bind="widget.options.customProps"
-      >
-        {{widget.name}}
+    <a-form-item
+      v-if="widget.type == 'divider' && (isSubform || isTable ? display[widget.model] && !subHideFields[rowIndex][widget.model] : display[widget.model])"
+      :wrapperCol="{ span: 0, offset: 0 }">
+      <a-divider :orientation="widget.options.contentPosition" v-bind="widget.options.customProps">
+        {{ widget.name }}
       </a-divider>
     </a-form-item>
 
-    <a-form-item v-if="widget.type == 'alert' && (isSubform || isTable ? display[widget.model] && !subHideFields[rowIndex][widget.model] : display[widget.model])"  :wrapperCol="{span: 0, offset: 0}">
-      <a-alert 
-        :message="widget.options.title"
-        :type="widget.options.type"
-        :description="widget.options.description"
-        :closable="widget.options.closable"
-        :center="widget.options.center"
-        :show-icon="widget.options.showIcon"
-        :effect="widget.options.effect"
-        :style="{width: widget.options.width}"
-        v-bind="widget.options.customProps"
-        @close="display[widget.model] = false"
-      ></a-alert>
+    <a-form-item
+      v-if="widget.type == 'alert' && (isSubform || isTable ? display[widget.model] && !subHideFields[rowIndex][widget.model] : display[widget.model])"
+      :wrapperCol="{ span: 0, offset: 0 }">
+      <a-alert :message="widget.options.title" :type="widget.options.type" :description="widget.options.description"
+        :closable="widget.options.closable" :center="widget.options.center" :show-icon="widget.options.showIcon"
+        :effect="widget.options.effect" :style="{ width: widget.options.width }" v-bind="widget.options.customProps"
+        @close="display[widget.model] = false"></a-alert>
     </a-form-item>
   </div>
-  
 </template>
 
 <script>
@@ -90,23 +54,23 @@ export default {
   components: {
     GenerateElementItem
   },
-  props: ['config', 'widget', 'models', 'rules', 'remote', 'blanks', 'display', 'edit', 'remoteOption', 'platform', 
-    'preview', 'containerKey', 'dataSourceValue', 'eventFunction', 'printRead', 'isSubform', 'rowIndex', 'subName', 
+  props: ['config', 'widget', 'models', 'rules', 'remote', 'blanks', 'display', 'edit', 'remoteOption', 'platform',
+    'preview', 'containerKey', 'dataSourceValue', 'eventFunction', 'printRead', 'isSubform', 'rowIndex', 'subName',
     'subHideFields', 'subDisabledFields', 'isDialog', 'dialogName', 'group', 'fieldNode', 'isGroup',
-    'isTable', 'isMobile', 'tableName'  
+    'isTable', 'isMobile', 'tableName'
   ],
-  data () {
+  data() {
     return {
-      
+
       dataModel: this.models[this.widget.model],
       dataModels: this.models
     }
   },
   computed: {
-    labelWidth () {
+    labelWidth() {
       return this.widget.options.hideLabel ? '0px' : (this.widget.options.isLabelWidth ? this.widget.options.labelWidth + 'px' : this.config.labelWidth + 'px')
     },
-    ruleProp () {
+    ruleProp() {
       let currentProp = this.widget.model
 
       if (this.group) {
@@ -118,22 +82,22 @@ export default {
   },
   inject: {
     setSubformData: {
-      default: () => {}
+      default: () => { }
     },
     setDialogData: {
-      default: () => {}
+      default: () => { }
     },
     setGroupData: {
-      default: () => {}
+      default: () => { }
     },
     setTableData: {
-      default: () => {}
+      default: () => { }
     },
     getFormComponent: {
       default: () => { return null }
     },
     onChange: {
-      default: () => {}
+      default: () => { }
     }
   },
   methods: {
@@ -141,7 +105,10 @@ export default {
   watch: {
     dataModel: {
       deep: true,
-      handler (val, oldValue) {
+      handler(val, oldValue) {
+        (this.models).push({'a':'b'})
+        console.log(this.models,777);
+        console.log(this.widget,888);
         if (this.isTable) {
           this.setTableData(val, this.rowIndex, this.widget.model)
         } else if (this.isSubform) {
@@ -163,7 +130,7 @@ export default {
         // 执行 onChange 方法
         if (this.widget.events && this.widget.events.onChange && this.$refs?.['generateElementItem']) {
           let funcKey = this.widget.events.onChange
-          
+
           if (this.isTable) {
             this.eventFunction[funcKey]({
               value: val,
@@ -186,9 +153,9 @@ export default {
               group: this.group,
               fieldNode: this.fieldNode ? this.fieldNode + '.' + this.widget.model : this.widget.model
             })
-          }  else {
+          } else {
             this.eventFunction[funcKey]({
-              value: val, 
+              value: val,
               field: this.widget.model,
               currentRef: this.$refs?.['generateElementItem']?.$refs?.[`fm-${this.widget.model}`],
               group: this.group,
@@ -200,9 +167,10 @@ export default {
     },
     models: {
       deep: true,
-      handler (val) {
+      handler(val) {
+        this.dataModel = val[this.widget.model] 
         this.dataModels = val
-        this.dataModel = val[this.widget.model]
+
       }
     }
   }
@@ -210,31 +178,32 @@ export default {
 </script>
 
 <style lang="scss" >
-.fm-form, .fm-generate-ant-dialog{
-  .fm-form-item{
+.fm-form,
+.fm-generate-ant-dialog {
+  .fm-form-item {
 
-    .ant-form-item{
-      .ant-col{
+    .ant-form-item {
+      .ant-col {
         max-width: none;
       }
 
-      .ant-form-item-label{
+      .ant-form-item-label {
         flex: 0 0 auto;
       }
 
-      .ant-form-item-control{
+      .ant-form-item-control {
         flex: 1;
       }
     }
 
-    .ant-form-item{
-      .ant-form-item-label{
+    .ant-form-item {
+      .ant-form-item-label {
         width: v-bind(labelWidth);
       }
     }
 
-    .no-label-left{
-      .ant-form-item-control{
+    .no-label-left {
+      .ant-form-item-control {
         margin-left: v-bind(labelWidth);
       }
     }
