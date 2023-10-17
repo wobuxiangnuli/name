@@ -23,7 +23,7 @@
             </template>
           </el-form-item>
           <!--数值组件：输入方式切换 -->
-          <el-form-item :label="$t('fm.config.widget.impuMethod')" v-if="data.type == 'valnum' || data.type == 'slider'">
+          <el-form-item :label="$t('fm.config.widget.imputMethod')" v-if="data.type == 'valnum' || data.type == 'slider'">
             <el-radio-group @change="changed" v-model="data.options.imputMethod" class="ml-4">
               <el-radio label="valnum" size="large">{{ $t('fm.config.widget.digit') }}</el-radio>
               <el-radio label="slider" size="large">{{ $t('fm.config.widget.process') }}</el-radio>
@@ -38,7 +38,7 @@
 
           <!--文本组件：单行文本多行文本的切换 -->
           <el-form-item v-if="data.type == 'input' || data.type == 'textarea'">
-            <el-radio-group @change="changed" v-model="data.options.wenben_switch" class="ml-4">
+            <el-radio-group @change="changed" v-model="data.options.typechange" class="ml-4">
               <el-radio label="input" size="large">单行</el-radio>
               <el-radio label="textarea" size="large">多行</el-radio>
             </el-radio-group>
@@ -1104,7 +1104,7 @@
                 <el-checkbox v-model="data.options.repeat">{{ $t('fm.config.widget.repeat') }}</el-checkbox>
               </div>
               <!-- 限定字数 只有最大字数限定-->
-              <div class="validate-block" v-if="Object.keys(data.options).indexOf('wordNum') >= 0">
+            <div class="validate-block" v-if="Object.keys(data.options).indexOf('wordNum') >= 0">
                 <el-checkbox v-model="data.options.wordNum">{{ $t('fm.config.widget.wordNum') }}</el-checkbox>
 
                 <div class="length">
@@ -1127,9 +1127,9 @@
 
               <el-input class="message-input" clearable  v-model="data.options.dataTypeMessage" v-if="data.options.dataTypeCheck"  :placeholder="$t('fm.message.errorTip')"></el-input>
             </div> -->
-              <!-- 正则部分 通过监听字段触发valiatePattern方法为rules传入正则式进行校验 -->
+              <!-- 正则部分 通过监听字段触发valiatePattern -->
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
-                <el-checkbox v-model="data.options.patternCheck" @click="setRegular">{{ $t('fm.config.widget.Regular')
+                <el-checkbox v-model="data.options.patternCheck" @click="setregular">{{ $t('fm.config.widget.Regular')
                 }}</el-checkbox>
                 <el-input disabled="true" class="message-input" v-if="data.options.patternCheck" clearable
                   v-model="data.options.RegularMessage"></el-input>
@@ -1290,7 +1290,7 @@ export default {
       }
     },
     //唤起修改正则式的弹框
-    setRegular() {
+    setregular() {
       this.$refs.regularDialog.open()
     },
     handleOptionsRemove(index) {
