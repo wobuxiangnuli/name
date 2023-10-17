@@ -2,7 +2,6 @@ import 'normalize.css/normalize.css'
 import { createI18n } from 'vue-i18n'
 
 import MakingForm from './components/Container.vue'
-import GenerateForm from './components/GenerateForm.vue'
 import GenerateAntdForm from './components/AntdvGenerator/GenerateForm.vue'
 
 import enUS from './lang/en-us.js'
@@ -59,7 +58,7 @@ const loadOptions = (opts) => {
 }
 
 MakingForm.install = function (app, opts = {
-  locale: 'en',
+  locale: 'zh-cn',
 }) {
   loadLang(app, opts.locale, opts.i18n)
   if (expire >= new Date().getTime()) {
@@ -72,20 +71,10 @@ MakingForm.install = function (app, opts = {
   return app
 }
 
-GenerateForm.install = function (app, opts = {
-  locale: 'en'
-}) {
-  loadLang(app, opts.locale, opts.i18n)
-  if (expire >= new Date().getTime()) {
-    app.component(GenerateForm.name, GenerateForm)
-  }
-  
-  displayVersion()
-  loadOptions(opts)
-}
+
 
 GenerateAntdForm.install = function (app, opts = {
-  locale: 'en'
+  locale: 'zh-cn'
 }) {
   loadLang(app, opts.locale, opts.i18n)
   if (expire >= new Date().getTime()) {
@@ -98,19 +87,18 @@ GenerateAntdForm.install = function (app, opts = {
 
 const components = [
   MakingForm,
-  GenerateForm,
   GenerateAntdForm
 ]
 
 const install = function (app, opts = {
-  locale: 'en',
+  locale: 'zh-cn',
   i18n: null,
   components: []
 }) {
   
   opts = {
     key: '03202309250096M',
-    locale: 'en',
+    locale: 'zh-cn',
     i18n: null,
     components: [],
     ...opts
@@ -134,13 +122,11 @@ const install = function (app, opts = {
 export {
   install,
   MakingForm,
-  GenerateForm,
   GenerateAntdForm
 }
 
 export default {
   install,
   MakingForm,
-  GenerateForm,
   GenerateAntdForm
 }

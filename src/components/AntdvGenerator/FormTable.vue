@@ -348,7 +348,6 @@ export default {
     VirtualTable,
     VirtualRow,
     VirtualCell,
-    GenerateFormItem: defineAsyncComponent(() => import('./GenerateFormItem.vue')),
     GenerateElementItem: defineAsyncComponent(() => import('./GenerateElementItem.vue'))
   },
   props: ['config', 'columns', 'value', 'models', 'remote', 'blanks', 'disableddata', 'rules', 'name', 

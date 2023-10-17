@@ -61,7 +61,7 @@
           v-bind="widget.options.customProps" @focus="handleOnFocus" @blur="handleOnBlur"></a-textarea>
       </template>
     </template>
-
+<!-- 数值组件 -->
     <template v-if="widget.type == 'number'||widget.type == 'valnum'">
       <template v-if="printRead">
         <span>{{ dataModel.toFixed(widget.options.precision) }}</span>
@@ -656,9 +656,16 @@ export default {
     this.deleteComponentInstance && this.deleteComponentInstance(this.fieldNode)
   },
   methods: {
+  //数值组件 格式化数据 显示自定义前后缀 仅显示在页面 不会改变数据格式
     formatter(value){
       let str = value.toString()
-      str = this.widget.options.unitMessage + str
+      if(this.widget.options.unitMessage){
+        if(this.widget.options.unit == 'prefix'){
+          str = this.widget.options.unitMessage + str
+        }else{
+          str = str + this.widget.options.unitMessage 
+        }
+      }
       return str
     },
     handleOnDynamicEvent() {

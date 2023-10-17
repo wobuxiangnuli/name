@@ -135,10 +135,10 @@ export default {
       widget: {
         digit:'数字',
         process:'进度',
-        imputmethod:'输入方式',
+        imputMethod:'输入方式',
         descriptioned:'功能描述',
         repeat:'不允许重复',
-        wordnum:'限定字数',
+        wordNum:'限定字数',
         widgetType: '类型',
         title: '字段属性',
         model: '字段标识',

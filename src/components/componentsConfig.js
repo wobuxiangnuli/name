@@ -3,21 +3,20 @@ export const basicComponents = [
     type: 'input',
     icon: 'icon-input',
     options: {
-      descriptioned:'',
-      minwordnum:'',
-      maxwordnum:'',
-      repeat:false,
-      wordnum:false,
-      width: '10',
+      descriptioned:'',//功能描述
+      minwordNum:'',//最小字数
+      maxwordNum:'',//最大字数
+      repeat:false,//不允许重复
+      wordNum:false,//字数
+      Regulared:false,
+      RegularMessage:'',
       defaultValue: '',
       description:'',
-      typechange:'input',
+      wenben_switch:'input',
       widthed:'1',
       required: false,
       requiredMessage: '',
-      Regular:false,
-      Regulared:false,
-      RegularMessage:'',
+      width: '10',
       dataType: '',
       dataTypeCheck: false,
       dataTypeMessage: '',
@@ -51,14 +50,14 @@ export const basicComponents = [
     icon: 'icon-diy-com-textarea',
     options: {
       descriptioned:'',
-      minwordnum:'',
-      maxwordnum:'',
+      minwordNum:'',
+      maxwordNum:'',
       repeat:false,
-      wordnum:false,
+      wordNum:false,
       width: '',
       defaultValue: '',
       description:'',
-      typechange:'textarea',
+      wenben_switch:'textarea',
       widthed:'1',
       required: false,
       requiredMessage: '',
@@ -122,9 +121,9 @@ export const basicComponents = [
     type: 'valnum',
     icon: 'icon-number',
     options: {
-      unit:'prefix',
-      unitMessage:'',
-      imputmethod:'valnum',
+      unit:'prefix',//单位默认前缀
+      unitMessage:'',//前后缀信息
+      imputMethod:'valnum',//输入当时默认
       width: '',
       required: false,
       requiredMessage: '',
@@ -439,7 +438,7 @@ export const basicComponents = [
     type: 'slider',
     icon: 'icon-slider',
     options: {
-      imputmethod:'slider',
+      imputMethod:'slider',
       defaultValue: 0,
       disabled: false,
       required: false,

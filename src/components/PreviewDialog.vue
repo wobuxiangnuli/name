@@ -18,12 +18,6 @@
 
     <div class="fm-generate-preview" :class="`${platform}`" v-loading="exportLoading">
       <el-scrollbar>
-        <generate-form preview :print-read="printRead" :platform="platform" id="export-id" :edit="formEdit"  insite="true" v-if="previewVisible && (previewForm.config.ui == 'element' || !previewForm.config.ui)" :data="previewForm" :value="widgetModels" ref="generateForm">
-
-          <template v-slot:blank>
-          </template>
-        </generate-form>
-
         <antd-generate-form preview :print-read="printRead" :platform="platform" :edit="formEdit"  insite="true" v-if="previewVisible && previewForm.config.ui == 'antd'" :data="previewForm" :value="widgetModels" ref="generateAntForm">
           <template v-slot:blank>
           </template>
@@ -58,7 +52,6 @@
 
 <script>
 import CusDialog from './CusDialog.vue'
-import GenerateForm from './GenerateForm.vue'
 import AntdGenerateForm from './AntdvGenerator/GenerateForm.vue'
 import request from '../util/request.js'
 import { consoleError } from '../util/index'
@@ -70,10 +63,13 @@ import PreviewPdf from './PreviewPdf.vue'
 export default {
   components: {
     CusDialog,
-    GenerateForm,
     AntdGenerateForm,
     PreviewPdf
   },
+
+
+
+
   props: {
   },
   emits: ['get-data-success'],

@@ -37,7 +37,7 @@
         v-bind="element.options.customProps"
       ></el-input-number>
     </template>
-<!-- 数值 -->
+<!-- 数值组件 -->
     <template v-if="element.type == 'valnum'">
       <el-input-number 
         v-model="element.options.defaultValue" 

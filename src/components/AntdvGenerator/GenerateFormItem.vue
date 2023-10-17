@@ -106,7 +106,6 @@ export default {
     dataModel: {
       deep: true,
       handler(val, oldValue) {
-        (this.models).push({'a':'b'})
         console.log(this.models,777);
         console.log(this.widget,888);
         if (this.isTable) {

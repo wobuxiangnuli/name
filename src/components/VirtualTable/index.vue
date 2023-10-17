@@ -139,7 +139,7 @@ import _ from 'lodash'
 
 export default {
   components: {
-    GenerateElementItem: defineAsyncComponent(() => import('../GenerateElementItem.vue'))
+    GenerateElementItem: defineAsyncComponent(() => import('../AntdvGenerator/GenerateElementItem.vue'))
   },
   props: ['columns', 'showControl', 'paging', 'pageSize', 'currentPage', 'displayFields'],
   data () {

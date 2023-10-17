@@ -22,12 +22,12 @@
               <el-input clearable v-model="data.model"></el-input>
             </template>
           </el-form-item>
-          <!-- 输入方式切换 -->
-          <el-form-item :label="$t('fm.config.widget.imputmethod')" v-if="data.type == 'valnum' || data.type == 'slider'">
-            <el-select v-model="data.options.imputmethod" @change="changed">
-              <el-option value="valnum" :label="$t('fm.config.widget.digit')"></el-option>
-              <el-option value="slider" :label="$t('fm.config.widget.process')"></el-option>
-            </el-select>
+          <!--数值组件：输入方式切换 -->
+          <el-form-item :label="$t('fm.config.widget.impuMethod')" v-if="data.type == 'valnum' || data.type == 'slider'">
+            <el-radio-group @change="changed" v-model="data.options.imputMethod" class="ml-4">
+              <el-radio label="valnum" size="large">{{ $t('fm.config.widget.digit') }}</el-radio>
+              <el-radio label="slider" size="large">{{ $t('fm.config.widget.process') }}</el-radio>
+            </el-radio-group>
           </el-form-item>
           <!-- 标题 -->
           <el-form-item :label="$t('fm.config.widget.name')"
@@ -36,20 +36,21 @@
           </el-form-item>
 
 
-          <!-- 单多切换 -->
+          <!--文本组件：单行文本多行文本的切换 -->
           <el-form-item v-if="data.type == 'input' || data.type == 'textarea'">
-            <el-radio-group @change="changed" v-model="data.options.typechange" class="ml-4">
+            <el-radio-group @change="changed" v-model="data.options.wenben_switch" class="ml-4">
               <el-radio label="input" size="large">单行</el-radio>
               <el-radio label="textarea" size="large">多行</el-radio>
             </el-radio-group>
           </el-form-item>
 
 
-
+<!-- 按钮名称 -->
           <el-form-item :label="$t('fm.config.widget.buttonName')"
             v-if="Object.keys(data.options).indexOf('buttonName') >= 0">
             <el-input clearable v-model="data.options.buttonName"></el-input>
           </el-form-item>
+<!-- 链接名称 -->
           <el-form-item :label="$t('fm.config.widget.linkName')"
             v-if="Object.keys(data.options).indexOf('linkName') >= 0">
             <el-input clearable v-model="data.options.linkName"></el-input>
@@ -123,7 +124,7 @@
               <el-radio-button :label="true">{{ $t('fm.config.widget.inline') }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
-
+<!-- 提示框:主题样式 -->
           <el-form-item :label="$t('fm.config.widget.effect')" v-if="Object.keys(data.options).indexOf('effect') >= 0">
             <el-radio-group v-model="data.options.effect">
               <el-radio-button label="light">light</el-radio-button>
@@ -172,7 +173,7 @@
             v-if="Object.keys(data.options).indexOf('precision') >= 0">
             <el-input-number v-model="data.options.precision" :min="0" :max="99999" :step="1"></el-input-number>
           </el-form-item>
-<!-- 单位 -->
+<!-- 数值:单位前后缀 只能实现页面效果  后台拿不到 -->
           <el-form-item :label="$t('fm.config.widget.unit')"
             v-if="data.type == 'valnum'&&Object.keys(data.options).indexOf('unit') >= 0">
             <el-select style="width:30%" v-model="data.options.unit">
@@ -643,7 +644,7 @@
               <el-option :label="$t('fm.config.widget.right')" value="right"></el-option>
             </el-select>
           </el-form-item>
-
+<!-- 默认值部分  针对不同类型显示不同的默认值框 -->
           <el-form-item :label="$t('fm.config.widget.defaultValue')" v-if="Object.keys(data.options).indexOf('defaultValue') >= 0 && data.type != 'custom'
             && data.type != 'imgupload'
             && data.type != 'fileupload'
@@ -679,6 +680,7 @@
             <el-color-picker v-if="data.type == 'color'" v-model="data.options.defaultValue"
               :show-alpha="data.options.showAlpha"></el-color-picker>
             <el-switch v-if="data.type == 'switch'" v-model="data.options.defaultValue"></el-switch>
+            
             <el-input-number v-if="data.type == 'number' || data.type == 'valnum'" v-model="data.options.defaultValue"
               :step="data.options.step" :min="data.options.min" :max="data.options.max"></el-input-number>
 
@@ -1089,7 +1091,7 @@
 
           <template
             v-if="data.type != 'grid' && data.type != 'tabs' && data.type != 'collapse' && data.type != 'report' && data.type != 'inline' && data.type != 'divider' && data.type != 'td' && data.type != 'th' && data.type != 'col' && data.type != 'button' && data.type != 'link' && data.type != 'steps' && data.type != 'alert' && data.type != 'pagination' && data.type != 'dialog' && data.type != 'card'">
-            <!-- 必填部分 -->
+            <!-- 必填部分 传入required属性值 进行校验 -->
             <el-form-item :label="$t('fm.config.widget.validate')">
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('required') >= 0">
                 <el-checkbox v-model="data.options.required">{{ $t('fm.config.widget.required') }}</el-checkbox>
@@ -1097,20 +1099,20 @@
                 <el-input class="message-input" clearable v-model="data.options.requiredMessage"
                   v-if="data.options.required" :placeholder="$t('fm.message.errorTip')"></el-input>
               </div>
-              <!-- 不允许重复 -->
+              <!-- 不允许重复 通过监听repeat触发validateRepeat方法为rules传入自定义校验-->
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('repeat') >= 0">
                 <el-checkbox v-model="data.options.repeat">{{ $t('fm.config.widget.repeat') }}</el-checkbox>
               </div>
-              <!-- 限定字数 -->
-              <div class="validate-block" v-if="Object.keys(data.options).indexOf('wordnum') >= 0">
-                <el-checkbox v-model="data.options.wordnum">{{ $t('fm.config.widget.wordnum') }}</el-checkbox>
+              <!-- 限定字数 只有最大字数限定-->
+              <div class="validate-block" v-if="Object.keys(data.options).indexOf('wordNum') >= 0">
+                <el-checkbox v-model="data.options.wordNum">{{ $t('fm.config.widget.wordNum') }}</el-checkbox>
 
                 <div class="length">
-                  <el-input class="length-input" type="number" v-model="data.options.minwordnum"
-                    v-if="data.options.wordnum" :placeholder="$t('fm.message.minnumTip')"></el-input>
-                  <span v-if="data.options.wordnum">——</span>
-                  <el-input class="length-input" type="number" v-model="data.options.maxwordnum"
-                    v-if="data.options.wordnum" :placeholder="$t('fm.message.maxnumTip')"></el-input>
+                  <el-input class="length-input" type="number" v-model="data.options.minwordNum"
+                    v-if="data.options.wordNum" :placeholder="$t('fm.message.minnumTip')"></el-input>
+                  <span v-if="data.options.wordNum">——</span>
+                  <el-input class="length-input" type="number" v-model="data.options.maxwordNum"
+                    v-if="data.options.wordNum" :placeholder="$t('fm.message.maxnumTip')"></el-input>
                 </div>
               </div>
               <!-- select部分 -->
@@ -1125,9 +1127,9 @@
 
               <el-input class="message-input" clearable  v-model="data.options.dataTypeMessage" v-if="data.options.dataTypeCheck"  :placeholder="$t('fm.message.errorTip')"></el-input>
             </div> -->
-              <!-- 正则部分 -->
+              <!-- 正则部分 通过监听字段触发valiatePattern方法为rules传入正则式进行校验 -->
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
-                <el-checkbox v-model="data.options.patternCheck" @click="setregular">{{ $t('fm.config.widget.Regular')
+                <el-checkbox v-model="data.options.patternCheck" @click="setRegular">{{ $t('fm.config.widget.Regular')
                 }}</el-checkbox>
                 <el-input disabled="true" class="message-input" v-if="data.options.patternCheck" clearable
                   v-model="data.options.RegularMessage"></el-input>
@@ -1195,7 +1197,7 @@ import RegularDialog from '../components/regular/dialog.vue'
 import CodeEditor from '../components/CodeEditor/index.vue'
 import CodeDialog from './CodeDialog.vue'
 import CusDialog from './CusDialog.vue'
-import FmFormTable from './FormTable/index.vue'
+import FmFormTable from '../components/AntdvGenerator/FormTable.vue'
 import EventConfig from './EventPanel/config.vue'
 import Editor from './Editor/index.vue'
 import { EventBus } from '../util/event-bus.js'
@@ -1243,21 +1245,21 @@ export default {
   },
   mounted() {
     this.validateRequired(this.data && this.data.options ? this.data.options.required : false)
-    this.validateRepeat(this.data && this.data.options ? this.data.options.required : '')
+    this.validateRepeat(this.data && this.data.options ? this.data.options.repeat : '')
     this.validateDataType(this.data && this.data.options ? this.data.options.dataType : '')
     this.valiatePattern(this.data && this.data.options ? this.data.options.pattern : '')
     this.validateCustom(this.data && this.data.options ? this.data.options.validator : '')
 
   },
   methods: {
+    // 为正则列表赋值，方便后续传递正则式以及错误提示信息
     handleRegular(value) {
       this.regularlist = {}
       this.data.options.RegularMessage = value.label
       this.regularlist = value
-      this.data.Regular = true
-      this.data.Regulared = true
 
     },
+    //修改宽度、 通用
     setwidth(label) {
       switch (label) {
         case '1/4':
@@ -1280,13 +1282,15 @@ export default {
           break;
       }
     },
+    //当存在类型改变字段  进行类型切换以及标题内容的修改
     changed(type) {
       this.data.type = type
       if (type == 'input' || type == 'textarea') {
         this.data.name = type == 'input' ? '单行文本' : '多行文本'
       }
     },
-    setregular() {
+    //唤起修改正则式的弹框
+    setRegular() {
       this.$refs.regularDialog.open()
     },
     handleOptionsRemove(index) {
