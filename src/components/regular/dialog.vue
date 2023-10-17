@@ -30,16 +30,11 @@
           </div>
         </el-col>
       </el-row>
-
-
     </div>
   </CusDialog>
 </template>
 <script >
 import CusDialog from '../CusDialog.vue'
-
-
-
 export default {
   components: {
     CusDialog,
@@ -136,7 +131,6 @@ export default {
       let alert = document.getElementsByClassName('alert')
       let ex = this.el.value
       if (this.el == '') {
-
       } else {
         if (ex.test(this.text)) {
           this.title = '测试通过'
@@ -169,7 +163,7 @@ export default {
   margin-left: 20px;
 }
 
-.el-input {
+.input-style {
   margin-top: 10px;
 }
 

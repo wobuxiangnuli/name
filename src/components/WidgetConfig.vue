@@ -4,13 +4,11 @@
       <div v-if="show" :key="data.key">
         <el-form label-position="top" size="default" :model="data">
           <el-form-item :label="$t('fm.config.widget.widgetType')">
-            <el-tag effect="plain">{{ $t(`fm.components.fields.${data.type}`) }}</el-tag>
+            <el-tag effect="plain">{{$t(`fm.components.fields.${data.type}`)}}</el-tag>
           </el-form-item>
-          <el-form-item :label="$t('fm.config.widget.model')"
-            v-if="data.type != 'td' && data.type != 'th' && data.type != 'col'" :required="true" prop="model">
-            <div v-if="getModelNode()"
-              style="font-size: 13px; word-break: break-all; line-height: 1.2; color: #e6a23c; padding: 0 5px 5px 5px;">
-              {{ getModelNode() }}
+          <el-form-item :label="$t('fm.config.widget.model')" v-if="data.type != 'td' && data.type != 'th' && data.type != 'col'" :required="true" prop="model">
+            <div v-if="getModelNode()" style="font-size: 13px; word-break: break-all; line-height: 1.2; color: #e6a23c; padding: 0 5px 5px 5px;">
+              {{getModelNode()}}
             </div>
             <template v-if="fieldModels?.length > 0">
               <el-select v-model="data.model" filterable allow-create default-first-option style="width: 100%;">
@@ -34,17 +32,13 @@
             v-if="data.type != 'grid' && data.type != 'tabs' && data.type != 'collapse' && data.type != 'report' && data.type != 'inline' && data.type != 'td' && data.type != 'th' && data.type != 'col' && data.type != 'alert' && data.type != 'dialog' && data.type != 'card'">
             <el-input clearable v-model="data.name"></el-input>
           </el-form-item>
-
-
           <!--文本组件：单行文本多行文本的切换 -->
           <el-form-item v-if="data.type == 'input' || data.type == 'textarea'">
-            <el-radio-group @change="changed" v-model="data.options.typechange" class="ml-4">
+            <el-radio-group @change="changed" v-model="data.options.wenben_switch" class="ml-4">
               <el-radio label="input" size="large">单行</el-radio>
               <el-radio label="textarea" size="large">多行</el-radio>
             </el-radio-group>
           </el-form-item>
-
-
 <!-- 按钮名称 -->
           <el-form-item :label="$t('fm.config.widget.buttonName')"
             v-if="Object.keys(data.options).indexOf('buttonName') >= 0">
@@ -62,7 +56,7 @@
             v-if="Object.keys(data.options).indexOf('description') >= 0">
             <el-input clearable v-model="data.options.description" type="textarea" autosize></el-input>
           </el-form-item>
-          <!-- 宽度 -->
+<!-- 宽度 -->
           <el-form-item :label="$t('fm.config.widget.width')"
             v-if="Object.keys(data.options).indexOf('width') >= 0 && data.type != 'td'">
             <div style="margin-left: 20px;">
@@ -182,15 +176,10 @@
             </el-select>
             <el-input v-model="data.options.unitMessage" style="width:70%"></el-input>
           </el-form-item>
-
-
-
-
           <el-form-item :label="$t('fm.config.widget.controls')"
             v-if="Object.keys(data.options).indexOf('controls') >= 0">
             <el-switch v-model="data.options.controls"></el-switch>
           </el-form-item>
-
           <el-form-item :label="$t('fm.config.widget.controlsPosition')"
             v-if="Object.keys(data.options).indexOf('controlsPosition') >= 0 && data.options.controls">
             <el-radio-group v-model="data.options.controlsPosition">
@@ -1103,7 +1092,7 @@
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('repeat') >= 0">
                 <el-checkbox v-model="data.options.repeat">{{ $t('fm.config.widget.repeat') }}</el-checkbox>
               </div>
-              <!-- 限定字数 只有最大字数限定-->
+            <!-- 限定字数 只有最大字数限定-->
             <div class="validate-block" v-if="Object.keys(data.options).indexOf('wordNum') >= 0">
                 <el-checkbox v-model="data.options.wordNum">{{ $t('fm.config.widget.wordNum') }}</el-checkbox>
 
@@ -1114,7 +1103,7 @@
                   <el-input class="length-input" type="number" v-model="data.options.maxwordNum"
                     v-if="data.options.wordNum" :placeholder="$t('fm.message.maxnumTip')"></el-input>
                 </div>
-              </div>
+            </div>
               <!-- select部分 -->
               <!-- <div class="validate-block" v-if="Object.keys(data.options).indexOf('dataType')>=0">
               <el-checkbox v-model="data.options.dataTypeCheck" style="margin-right: 10px;"></el-checkbox>
@@ -1129,7 +1118,7 @@
             </div> -->
               <!-- 正则部分 通过监听字段触发valiatePattern -->
               <div class="validate-block" v-if="Object.keys(data.options).indexOf('pattern') >= 0">
-                <el-checkbox v-model="data.options.patternCheck" @click="setregular">{{ $t('fm.config.widget.Regular')
+                <el-checkbox v-model="data.options.patternCheck" @click="setRegular">{{ $t('fm.config.widget.Regular')
                 }}</el-checkbox>
                 <el-input disabled="true" class="message-input" v-if="data.options.patternCheck" clearable
                   v-model="data.options.RegularMessage"></el-input>
@@ -1170,26 +1159,19 @@
       <div v-else class="empty">
         {{ $t('fm.description.configEmpty') }}
       </div>
-
       <code-dialog ref="codeDialog" mode="html" :title="$t('fm.config.widget.customTemplates')"
         help="https://www.yuque.com/ln7ccx/ntgo8q/zr53m4" @on-confirm="handleTemplateConfirm"></code-dialog>
-
       <code-dialog ref="cascaderDialog" width="800px" code-height="400px" mode="javascript"
         :title="$t('fm.config.widget.option')" @on-confirm="handleCascaderConfirm"></code-dialog>
-
       <code-dialog ref="treeDialog" width="800px" code-height="400px" mode="javascript"
         :title="$t('fm.config.widget.option')" @on-confirm="handleTreeConfirm"></code-dialog>
-
       <code-dialog ref="extendPropsDialog" width="800px" code-height="400px" mode="javascript"
         :title="$t('fm.config.widget.extendPropsConfig')" @on-confirm="handlePropsConfirm"></code-dialog>
-
       <code-dialog ref="defaultValueDialog" width="800px" code-height="400px" mode="javascript"
         :title="$t('fm.config.widget.defaultValue')" @on-confirm="handleDefaultValueConfirm"></code-dialog>
     </div>
-
   </el-scrollbar>
 </template>
-
 <script>
 import { validatedrepeat } from '../util/index'
 import Draggable from 'vuedraggable/src/vuedraggable'
@@ -1284,13 +1266,16 @@ export default {
     },
     //当存在类型改变字段  进行类型切换以及标题内容的修改
     changed(type) {
-      this.data.type = type
-      if (type == 'input' || type == 'textarea') {
+      if (type == 'input' || type == 'textarea') {//input:单行文本 textarea:多行文本
+        this.data.type = type
         this.data.name = type == 'input' ? '单行文本' : '多行文本'
-      }
+      }else{
+      if (type == 'valnum' || type == 'slider'){//vanum:数值类型 slider:滑块类型
+        this.data.type = type
+      }}
     },
     //唤起修改正则式的弹框
-    setregular() {
+    setRegular() {
       this.$refs.regularDialog.open()
     },
     handleOptionsRemove(index) {

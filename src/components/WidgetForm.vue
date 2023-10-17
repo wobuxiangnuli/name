@@ -1,176 +1,73 @@
 <template>
-  <div class="widget-form-container"
-    :class="`${platform}`"
-  >
-    <el-form  
-      :size="data.config.size" 
-      :label-position="data.config.labelPosition" 
-      :label-width="data.config.labelWidth + 'px'"
-      :class="{
-        [data.config && data.config.customClass]:  (data.config && data.config.customClass) ? true : false,
-      }"
-      :style="{width: data.config.width, margin: 'auto'}"
-      :label-suffix="data.config?.labelSuffix ? ' : ' : ' '"
-    >
-      <div v-if="data.list.length == 0" class="form-empty">{{$t('fm.description.containerEmpty')}}</div>
+  <div class="widget-form-container" :class="`${platform}`">
+    <el-form :size="data.config.size" :label-position="data.config.labelPosition"
+      :label-width="data.config.labelWidth + 'px'" :class="{
+        [data.config && data.config.customClass]: (data.config && data.config.customClass) ? true : false,
+      }" :style="{ width: data.config.width, margin: 'auto' }" :label-suffix="data.config?.labelSuffix ? ' : ' : ' '">
+      <div v-if="data.list.length == 0" class="form-empty">{{ $t('fm.description.containerEmpty') }}</div>
       <el-scrollbar ref="formScrollRef">
-        <draggable
-          :list="data.list" 
-          v-bind="{group:'people', ghostClass: 'ghost',animation: 200, handle: '.drag-widget'}"
-          @add="handleWidgetAdd"
-          @update="handleWidgetUpdate"
-          :no-transition-on-drag="true"
-          item-key="key"
-          class="widget-form-list"
-        >
+        <draggable :list="data.list"
+          v-bind="{ group: 'people', ghostClass: 'ghost', animation: 200, handle: '.drag-widget' }" @add="handleWidgetAdd"
+          @update="handleWidgetUpdate" :no-transition-on-drag="true" item-key="key" class="widget-form-list">
 
-          <template #item="{element, index}">
-            
-              <widget-table
-                v-if="element.type === 'table'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index" 
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform"
-                :form-key="formKey"
-              >
-              </widget-table>
+          <template #item="{ element, index }">
 
-              <widget-collapse
-                v-else-if="element.type === 'collapse'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index" 
-                :data="data"
-                @select-change="handleSelectChange"  
-                :platform="platform"
-                :form-key="formKey"
-              >
-              </widget-collapse>
+            <widget-table v-if="element.type === 'table'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-table>
 
-              <widget-tab-item
-                v-else-if="element.type === 'tabs'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index" 
-                :data="data"
-                @select-change="handleSelectChange"  
-                :platform="platform"
-                :form-key="formKey"
-              >
-              </widget-tab-item>
+            <widget-collapse v-else-if="element.type === 'collapse'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-collapse>
 
-              <widget-report
-                v-else-if="element.type === 'report'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index" 
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform" 
-                :form-key="formKey"
-              >
-              </widget-report>
+            <widget-tab-item v-else-if="element.type === 'tabs'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-tab-item>
 
-              <widget-inline
-                v-else-if="element.type === 'inline'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index"
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform" 
-                :form-key="formKey"
-              >
-              </widget-inline>
+            <widget-report v-else-if="element.type === 'report'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-report>
 
-              <widget-sub-form
-                v-else-if="element.type === 'subform'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index"
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform" 
-                :form-key="formKey"
-              >
-              </widget-sub-form>
+            <widget-inline v-else-if="element.type === 'inline'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-inline>
 
-              <widget-group
-                v-else-if="element.type === 'group'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index"
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform" 
-                :form-key="formKey"
-              >
-              </widget-group>
+            <widget-sub-form v-else-if="element.type === 'subform'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-sub-form>
 
-              <widget-dialog
-                v-else-if="element.type === 'dialog'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index"
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform" 
-                :form-key="formKey"
-              >
-              </widget-dialog>
+            <widget-group v-else-if="element.type === 'group'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-group>
 
-              <widget-card
-                v-else-if="element.type === 'card'"
-                :key="element.key"
-                :element="element"
-                v-model:select="selectWidget" 
-                :index="index"
-                :data="data"
-                @select-change="handleSelectChange" 
-                :platform="platform" 
-                :form-key="formKey"
-              >
-              </widget-card>
+            <widget-dialog v-else-if="element.type === 'dialog'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-dialog>
 
-              <widget-form-item 
-                v-else-if="element.type !== 'grid'" 
-                :key="element.key" 
-                :element="element" 
-                v-model:select="selectWidget" 
-                :index="index" 
-                :data="data"
-                @select-change="handleSelectChange" 
-                :form-key="formKey" 
-              >
-              </widget-form-item>
+            <widget-card v-else-if="element.type === 'card'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :platform="platform" :form-key="formKey">
+            </widget-card>
 
-              <widget-col-item
-                v-else
-                :key="element.key" 
-                :element="element" 
-                v-model:select="selectWidget" 
-                :index="index" 
-                :data="data"
-                @select-change="handleSelectChange"
-                :platform="platform"
-                :form-key="formKey"
-              >
-              </widget-col-item>
-            
+            <widget-form-item v-else-if="element.type !== 'grid'" :key="element.key" :element="element"
+              v-model:select="selectWidget" :index="index" :data="data" @select-change="handleSelectChange"
+              :form-key="formKey">
+            </widget-form-item>
+
+            <widget-col-item v-else :key="element.key" :element="element" v-model:select="selectWidget" :index="index"
+              :data="data" @select-change="handleSelectChange" :platform="platform" :form-key="formKey">
+            </widget-col-item>
+
           </template>
         </draggable>
-        
       </el-scrollbar>
     </el-form>
   </div>
@@ -212,12 +109,12 @@ export default {
   props: ['data', 'select', 'platform', 'formKey'],
   emits: ['update:select'],
   inject: ['changeConfigTab'],
-  data () {
+  data() {
     return {
       selectWidget: this.select || {}
     }
   },
-  mounted () {
+  mounted() {
     document.body.ondrop = function (event) {
       let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
       if (isFirefox) {
@@ -256,20 +153,20 @@ export default {
       this._addWidget(this.data.list, widgetItem)
     })
   },
-  beforeUnmount () {
+  beforeUnmount() {
     EventBus.$off('on-field-add-' + this.formKey)
   },
   methods: {
-    _addWidget (list, widget, isTable = false) {
-      
-      if (isTable 
-        && (widget.type == 'subform' 
-          || widget.type == 'grid' 
-          || widget.type == 'table' 
-          || widget.type == 'tabs' 
-          || widget.type == 'collapse' 
-          || widget.type == 'divider' 
-          || widget.type == 'report' 
+    _addWidget(list, widget, isTable = false) {
+
+      if (isTable
+        && (widget.type == 'subform'
+          || widget.type == 'grid'
+          || widget.type == 'table'
+          || widget.type == 'tabs'
+          || widget.type == 'collapse'
+          || widget.type == 'divider'
+          || widget.type == 'report'
           || widget.type == 'inline'
           || widget.type == 'dialog'
           || widget.type == 'card'
@@ -293,7 +190,7 @@ export default {
             this.scrollTo()
           }, 200)
 
-          this.$nextTick(() => {         EventBus.$emit('on-history-add-' + this.formKey)       })
+          this.$nextTick(() => { EventBus.$emit('on-history-add-' + this.formKey) })
         } else {
           for (let l = 0; l < list.length; l++) {
             let item = list[l]
@@ -328,7 +225,7 @@ export default {
               for (let i = 0; i < item.rows.length; i++) {
                 for (let j = 0; j < item.rows[i].columns.length; j++) {
                   widget.options.hideLabel = true
-                  if ('table' == this._addWidget(item.rows[i].columns[j].list, widget, false)){
+                  if ('table' == this._addWidget(item.rows[i].columns[j].list, widget, false)) {
                     return 'table'
                   }
                 }
@@ -368,18 +265,18 @@ export default {
           this.scrollTo()
         }, 200)
 
-        this.$nextTick(() => {         EventBus.$emit('on-history-add-' + this.formKey)       })
+        this.$nextTick(() => { EventBus.$emit('on-history-add-' + this.formKey) })
       }
     },
-    handleWidgetUpdate (evt) {
-      this.$nextTick(() => {         EventBus.$emit('on-history-add-' + this.formKey)       })
+    handleWidgetUpdate(evt) {
+      this.$nextTick(() => { EventBus.$emit('on-history-add-' + this.formKey) })
     },
-    handleWidgetAdd (evt) {
+    handleWidgetAdd(evt) {
       const newIndex = evt.newIndex
       const to = evt.to
 
       this.data.list[newIndex] = _.cloneDeep(this.data.list[newIndex])
-      
+
       //为拖拽到容器的元素添加唯一 key
       const key = Math.random().toString(36).slice(-8)
       this.data.list[newIndex] = {
@@ -408,11 +305,11 @@ export default {
 
       this.$nextTick(() => {
         this.selectWidget = this.data.list[newIndex]
-        EventBus.$emit('on-history-add-' + this.formKey)  
+        EventBus.$emit('on-history-add-' + this.formKey)
       })
 
     },
-    handleWidgetDelete (index) {
+    handleWidgetDelete(index) {
       if (this.data.list.length - 1 === index) {
         if (index === 0) {
           this.selectWidget = {}
@@ -426,15 +323,15 @@ export default {
       this.$nextTick(() => {
         this.data.list.splice(index, 1)
 
-        this.$nextTick(() => {         EventBus.$emit('on-history-add-' + this.formKey)       })
+        this.$nextTick(() => { EventBus.$emit('on-history-add-' + this.formKey) })
       })
     },
-    handleSelectChange (index) {
+    handleSelectChange(index) {
       setTimeout(() => {
-        index >=0 ? (this.selectWidget = this.data.list[index]) : (this.selectWidget = {})
+        index >= 0 ? (this.selectWidget = this.data.list[index]) : (this.selectWidget = {})
       })
     },
-    scrollTo () {
+    scrollTo() {
       let activeTop = document.querySelector('.widget-form-container .active').getBoundingClientRect().top
 
       let activeHeight = document.querySelector('.widget-form-container .active').offsetHeight
@@ -449,13 +346,13 @@ export default {
 
       let top = scorllTop - containerTop
 
-      if ( y + activeHeight  > -top + containerHeight || y  < -top ) {
-        this.$refs.formScrollRef.scrollTo({top: y - 5, behavior: "smooth"})
+      if (y + activeHeight > -top + containerHeight || y < -top) {
+        this.$refs.formScrollRef.scrollTo({ top: y - 5, behavior: "smooth" })
       }
     }
   },
   watch: {
-    select (val) {
+    select(val) {
       this.selectWidget = val
       if (Object.keys(val).length) {
         this.changeConfigTab('widget')
@@ -463,7 +360,7 @@ export default {
         this.changeConfigTab('form')
       }
     },
-    selectWidget (val) {
+    selectWidget(val) {
       this.$emit('update:select', val)
     }
   }

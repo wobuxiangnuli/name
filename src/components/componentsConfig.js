@@ -124,6 +124,7 @@ export const basicComponents = [
       unit:'prefix',//单位默认前缀
       unitMessage:'',//前后缀信息
       imputMethod:'valnum',//输入当时默认
+      descriptioned:'',//控件功能描述
       width: '',
       required: false,
       requiredMessage: '',
