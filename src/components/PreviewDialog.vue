@@ -57,19 +57,12 @@ import request from '../util/request.js'
 import { consoleError } from '../util/index'
 import { ElMessage } from 'element-plus'
 import PreviewPdf from './PreviewPdf.vue'
-
-
-
 export default {
   components: {
     CusDialog,
     AntdGenerateForm,
     PreviewPdf
   },
-
-
-
-
   props: {
   },
   emits: ['get-data-success'],
@@ -99,7 +92,6 @@ export default {
           width : 120,
           height : 120
         });
-
         qrcode.makeCode(url)
       }, 500)
     },

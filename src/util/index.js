@@ -176,7 +176,7 @@ export const getBindModels = (models, binds) => {
 //进行不允许重复的验证
 export const validatedrepeat = (rule,value,callback) =>{
   return new Promise((resolve, reject) => {
-    if (value == '里斯') {
+    if (value == '1374328620@qq.com') {
       reject('已存在')
     }else{
       resolve()

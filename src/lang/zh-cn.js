@@ -2,14 +2,21 @@ export default {
   fm: {
     components: {
       fields: {
-        input: '单行文本',
+        input: '文本',
+        valnum:'数值',
+        amount:'金额',
+        time: '时间',
+        date: '日期',
+        email:'邮箱',
+        phone:'电话',
+        landline:'座机',
+        area:'地区',
+        annex:'附件',
         textarea: '多行文本',
         number: '计数器',
-        valnum:'数值',
-        radio: '单选框组',
-        checkbox: '多选框组',
-        time: '时间选择器',
-        date: '日期选择器',
+        radio: '单选',
+        checkbox: '多选',
+        checkselect:'多选下拉菜单',
         rate: '评分',
         color: '颜色选择器',
         select: '下拉选择框',
@@ -71,8 +78,8 @@ export default {
       qrcodePreview: '手机预览二维码'
     },
     message: {
-      minnumTip:'最小字数',
-      maxnumTip:'最大字数',
+      minnumTip:'最小',
+      maxnumTip:'最大',
       copySuccess: '复制成功',
       validError: '表单数据校验失败',
       noPut: '不支持添加此字段',
@@ -133,8 +140,12 @@ export default {
         labelSuffix: '表单标签后缀'
       },
       widget: {
-        digit:'数字',
-        process:'进度',
+        areaType:'地区类型',
+        acceptType:'文件类型',
+        juzhen:'矩阵',
+        tagNum:'限定可选项数',
+        showMethod:'显示方式',
+        setMinute:'预设分钟间隔',//预设分钟间隔
         imputMethod:'输入方式',
         descriptioned:'功能描述',
         repeat:'不允许重复',

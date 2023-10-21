@@ -144,7 +144,6 @@ export default {
   methods: {
     handleChange () {
       const files = this.$refs.uploadInput.files
-
       if (this.fileList.length + files.length > this.limit) {
         this.$refs.uploadInput.value = []
         return false
@@ -194,13 +193,20 @@ export default {
             if (this.isQiniu) {
               this.uploadAction2(reader.result, file, key)
             } else {
-              this.uploadAction(reader.result, file, key)
+              if (file.type == 'application/pdf') {
+                this.uploadAction(reader.result, file, key)
+              }else{
+              }
             }
           })
         }
       }
       this.$refs.uploadInput.value = []
     }, 
+    beforeUpload(file){
+      console.log(file,111111111);
+      return false
+    },
     uploadAction (res, file, key) {
       let changeIndex = this.fileList.findIndex(item => item.key === key)
       const xhr = new XMLHttpRequest()

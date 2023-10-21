@@ -3,6 +3,12 @@
   <el-scrollbar>
     <div class="form-config-container">
       <el-form label-position="top" size="default">
+        <el-form-item label="UI">
+        <el-radio-group v-model="dataModel.ui">
+          <el-radio-button label="element">Element</el-radio-button>
+          <el-radio-button label="antd">Ant Design</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
         <el-form-item :label="$t('fm.config.form.width')">
           <el-input v-model="dataModel.width" clearable :disabled="isMobile()"></el-input>
         </el-form-item>

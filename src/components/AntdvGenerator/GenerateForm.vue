@@ -245,7 +245,6 @@ import GenerateCard from './GenerateCard.vue'
 import {loadJs, updateStyleSheets, splitStyleSheets, clearStyleSheets, consoleError, getBindModels } from '../../util/index.js'
 import { EventBus } from '../../util/event-bus.js'
 import _ from 'lodash'
-import axios from 'axios'
 import { computed } from 'vue'
 import { updateClassName } from '../../util/reuse-methods.js'
 import { exportPDF } from '../../util/export.js'
@@ -357,9 +356,7 @@ export default {
     },
     // 内容改变时触发
     _changeFormValue (value, field) {
-      console.log(this.models,36033333333)
-      console.log(this.dataBindFields,363333333333)
-      console.log(Object.keys(this.dataBindFields),444444444444444)
+ 
       this.models[field] = value
       this.$emit('on-change', field, value, this.models)
     },

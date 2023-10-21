@@ -1,4 +1,7 @@
+import adress from '../demo/adress'
+
 export const basicComponents = [
+  //文本控件
   {
     type: 'input',
     icon: 'icon-input',
@@ -13,7 +16,6 @@ export const basicComponents = [
       defaultValue: '',
       description:'',
       wenben_switch:'input',
-      widthed:'1',
       required: false,
       requiredMessage: '',
       width: '10',
@@ -49,16 +51,17 @@ export const basicComponents = [
     type: 'textarea',
     icon: 'icon-diy-com-textarea',
     options: {
-      descriptioned:'',
-      minwordNum:'',
-      maxwordNum:'',
+      descriptioned:'',//功能描述
+      minwordNum:'',//最小字数
+      maxwordNum:'',//最大字数
+      repeat:false,//不允许重复
+      wordNum:false,//字数
       repeat:false,
       wordNum:false,
       width: '',
       defaultValue: '',
       description:'',
       wenben_switch:'textarea',
-      widthed:'1',
       required: false,
       requiredMessage: '',
       disabled: false,
@@ -86,37 +89,7 @@ export const basicComponents = [
       onBlur: ''
     }
   },
-  {
-    type: 'number',
-    icon: 'icon-number',
-    options: {
-      width: '',
-      required: false,
-      requiredMessage: '',
-      validatorCheck: false,
-      validator: '',
-      defaultValue: 0,
-      min: 0,
-      max: 9,
-      step: 1,
-      disabled: false,
-      controls: true,
-      controlsPosition: '',
-      customClass: '',
-      labelWidth: 100,
-      isLabelWidth: false,
-      hidden: false,
-      dataBind: true,
-      precision: 0,
-      customProps: {},
-      tip: ''
-    },
-    events: {
-      onChange: '',
-      onFocus: '',
-      onBlur: ''
-    }
-  },
+  //数值控件
   {
     type: 'valnum',
     icon: 'icon-number',
@@ -153,91 +126,28 @@ export const basicComponents = [
     }
   },
   {
-    type: 'radio',
-    icon: 'icon-radio-active',
+    type: 'slider',
+    icon: 'icon-slider',
     options: {
-      inline: false,
-      defaultValue: '',
-      showLabel: false,
-      options: [
-        {
-          value: 'Option 1',
-          label: 'Option 1'
-        },
-        {
-          value: 'Option 2',
-          label: 'Option 2'
-        },
-        {
-          value: 'Option 3',
-          label: 'Option 3'
-        }
-      ],
-      required: true,
-      requiredMessage: '',
-      validatorCheck: false,
-      validator: '',
-      width: '',
-      remote: false,
-      remoteType: 'datasource',
-      remoteOption: '',
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: '',
-      customClass: '',
-      labelWidth: 100,
-      isLabelWidth: false,
-      hidden: false,
-      dataBind: true,
+      descriptioned:'',//功能描述
+      imputMethod:'slider',
+      defaultValue: 0,
       disabled: false,
-      customProps: {},
-      tip: ''
-    },
-    events: {
-      onChange: ''
-    }
-  },
-  {
-    type: 'checkbox',
-    icon: 'icon-check-box',
-    options: {
-      inline: false,
-      defaultValue: [],
-      showLabel: false,
-      options: [
-        {
-          value: 'Option 1'
-        },
-        {
-          value: 'Option 2'
-        },
-        {
-          value: 'Option 3'
-        }
-      ],
       required: false,
       requiredMessage: '',
       validatorCheck: false,
       validator: '',
+      min: 0,
+      max: 100,
+      step: 1,
+      showInput: false,
+      range: false,
       width: '',
-      remote: false,
-      remoteType: 'datasource',
-      remoteOption: '',
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: '',
       customClass: '',
       labelWidth: 100,
       isLabelWidth: false,
       hidden: false,
       dataBind: true,
-      disabled: false,
       customProps: {},
       tip: ''
     },
@@ -245,41 +155,102 @@ export const basicComponents = [
       onChange: ''
     }
   },
-  {
-    type: 'select',
-    icon: 'icon-select',
+   //金额控件
+   {
+    type: 'amount',
+    icon: 'icon-input',
     options: {
+      descriptioned:'',//控件功能描述
+      repeat:'',//不允许重复
       defaultValue: '',
-      multiple: false,
-      disabled: false,
-      clearable: false,
+      description:'',
+      required: false,
+      requiredMessage: '',
+      width: '10',
+      dataType: '',
+      dataTypeCheck: false,
+      dataTypeMessage: '',
+      validatorCheck: false,
+      validator: '',
       placeholder: '',
+      customClass: '',
+      disabled: false,
+      labelWidth: 100,
+      isLabelWidth: false,
+      hidden: false,
+      dataBind: true,
+      showPassword: false,
+      clearable: false,
+      maxlength: '',
+      showWordLimit: false,
+      customProps: {},
+      tip: ''
+    },
+    events: {
+      onChange: '',
+      onFocus: '',
+      onBlur: ''
+    }
+  },
+  //邮箱控件
+  {
+    type: 'email',
+    icon: 'icon-input',
+    options: {
+      descriptioned:'',//控件功能描述
+      repeat:'',//不允许重复
+      defaultValue: '',
+      description:'',
+      required: false,
+      requiredMessage: '',
+      width: '10',
+      dataType: 'email',
+      dataTypeCheck: true,
+      dataTypeMessage: '请输入邮箱',
+      validatorCheck: false,
+      validator: '',
+      placeholder: '',
+      customClass: '',
+      disabled: false,
+      labelWidth: 100,
+      isLabelWidth: false,
+      hidden: false,
+      dataBind: true,
+      showPassword: false,
+      clearable: false,
+      maxlength: '',
+      showWordLimit: false,
+      customProps: {},
+      tip: ''
+    },
+    events: {
+      onChange: '',
+      onFocus: '',
+      onBlur: ''
+    }
+  },
+  //日期控件
+  {
+    type: 'date',
+    icon: 'icon-date',
+    options: {
+      descriptioned:'',//字段说明
+      defaultValue: '',
+      readonly: false,
+      disabled: false,
+      editable: false,
+      clearable: true,
+      placeholder: '',
+      startPlaceholder: '',
+      endPlaceholder: '',
+      type: 'date',
+      format: '',
+      timestamp: false,
       required: false,
       requiredMessage: '',
       validatorCheck: false,
       validator: '',
-      showLabel: false,
       width: '',
-      options: [
-        {
-          value: 'Option 1'
-        },
-        {
-          value: 'Option 2'
-        },{
-          value: 'Option 3'
-        }
-      ],
-      remote: false,
-      remoteType: 'datasource',
-      remoteOption: '',
-      filterable: false,
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: '',
       customClass: '',
       labelWidth: 100,
       isLabelWidth: false,
@@ -294,10 +265,14 @@ export const basicComponents = [
       onBlur: ''
     }
   },
+  //时间控件
   {
     type: 'time',
     icon: 'icon-time',
     options: {
+      minuteStep:'1',//分钟间隔数
+      setMinute:false,//预设分钟间隔
+      descriptioned:'',//字段说明
       defaultValue: '',
       readonly: false,
       disabled: false,
@@ -328,33 +303,31 @@ export const basicComponents = [
       onBlur: ''
     }
   },
+  //电话控件
   {
-    type: 'date',
-    icon: 'icon-date',
+    type: 'phone',
+    icon: 'icon-number',
     options: {
-      defaultValue: '',
-      readonly: false,
-      disabled: false,
-      editable: false,
-      clearable: true,
-      placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
-      type: 'date',
-      format: 'YYYY-MM-DD',
-      timestamp: false,
+      dianhua_switch:'phone',
+      descriptioned:'',//控件功能描述
+      width: '50%',
+      controls:false,
       required: false,
       requiredMessage: '',
+      pattern: /^1(3|4|7|5|8)([0-9]{9})/,
+      patternCheck: true,
+      patternMessage: '请输入正确的电话号码',
       validatorCheck: false,
       validator: '',
-      width: '',
+      defaultValue: null,
+      disabled: false,
       customClass: '',
       labelWidth: 100,
       isLabelWidth: false,
       hidden: false,
       dataBind: true,
       customProps: {},
-      tip: ''
+      tip: '',
     },
     events: {
       onChange: '',
@@ -362,6 +335,319 @@ export const basicComponents = [
       onBlur: ''
     }
   },
+//座机控件options
+{
+  type: 'landline',
+  icon: 'icon-number',
+  options: {
+    dianhua_switch:'landline',//
+    descriptioned:'',//控件功能描述
+    width: '50%',
+    controls:false,
+    required: false,
+    requiredMessage: '',
+    pattern: /0\d{2,3}-\d{7,8}/,
+    patternCheck: true,
+    patternMessage: '请输入正确的座机号码',
+    validatorCheck: false,
+    validator: '',
+    defaultValue: null,
+    disabled: false,
+    customClass: '',
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    customProps: {},
+    tip: '',
+  },
+  events: {
+    onChange: '',
+    onFocus: '',
+    onBlur: ''
+  }
+},
+//地区控件
+{
+  type: 'area',
+  icon: 'icon-jilianxuanze',
+  options: {
+    areaType:'1',
+    defaultValue: [],
+    width: '',
+    placeholder: '',
+    disabled: false,
+    clearable: false,
+    options: [
+      ...adress.list
+    ],
+    remote: false,
+    remoteType: 'datasource',
+    remoteOption: '',
+    remoteOptions: [],
+    props: {
+      value: 'value',
+      label: 'label',
+      children: 'children'
+    },
+    remoteFunc: '',
+    customClass: '',
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    required: false,
+    validatorCheck: false,
+    validator: '',
+    multiple: false,
+    filterable: false,
+    checkStrictly: false,
+    customProps: {},
+    tip: ''
+  },
+  events: {
+    onChange: '',
+    onFocus: '',
+    onBlur: ''
+  }
+},
+//单选控件
+{
+  type: 'radio',
+  icon: 'icon-radio-active',
+  options: {
+    showMethod:'radio',
+    inline: false,
+    defaultValue: '',
+    showLabel: false,
+    options: [
+      {
+        value: 'Option 1',
+        label: 'Option 1'
+      },
+      {
+        value: 'Option 2',
+        label: 'Option 2'
+      },
+      {
+        value: 'Option 3',
+        label: 'Option 3'
+      }
+    ],
+    required: true,
+    requiredMessage: '',
+    validatorCheck: false,
+    validator: '',
+    width: '',
+    remote: false,
+    remoteType: 'datasource',
+    remoteOption: '',
+    remoteOptions: [],
+    props: {
+      value: 'value',
+      label: 'label'
+    },
+    remoteFunc: '',
+    customClass: '',
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    disabled: false,
+    customProps: {},
+    tip: ''
+  },
+  events: {
+    onChange: ''
+  }
+},
+//多选控件
+{
+  type: 'checkbox',
+  icon: 'icon-check-box',
+  options: {
+    tagNum:false,
+    showMethod:'checkbox',
+    inline: false,
+    defaultValue: [],
+    showLabel: false,
+    options: [
+      {
+        value: 'Option 1'
+      },
+      {
+        value: 'Option 2'
+      },
+      {
+        value: 'Option 3'
+      }
+    ],
+    required: false,
+    requiredMessage: '',
+    validatorCheck: false,
+    validator: '',
+    width: '',
+    remote: false,
+    remoteType: 'datasource',
+    remoteOption: '',
+    remoteOptions: [],
+    props: {
+      value: 'value',
+      label: 'label'
+    },
+    remoteFunc: '',
+    customClass: '',
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    disabled: false,
+    customProps: {},
+    tip: ''
+  },
+  events: {
+    onChange: ''
+  }
+},
+//下拉菜单控件
+{
+  type: 'select',
+  icon: 'icon-select',
+  options: {
+    showMethod:'select',
+    defaultValue: '',
+    multiple: false,
+    disabled: false,
+    clearable: false,
+    placeholder: '',
+    required: false,
+    requiredMessage: '',
+    validatorCheck: false,
+    validator: '',
+    showLabel: false,
+    width: '',
+    options: [
+      {
+        value: 'Option 1'
+      },
+      {
+        value: 'Option 2'
+      },{
+        value: 'Option 3'
+      }
+    ],
+    remote: false,
+    remoteType: 'datasource',
+    remoteOption: '',
+    filterable: false,
+    remoteOptions: [],
+    props: {
+      value: 'value',
+      label: 'label'
+    },
+    remoteFunc: '',
+    customClass: '',
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    customProps: {},
+    tip: ''
+  },
+  events: {
+    onChange: '',
+    onFocus: '',
+    onBlur: ''
+  }
+},
+//多选下拉菜单控件
+{
+  type: 'checkselect',
+  icon: 'icon-select',
+  options: {
+    showMethod:'checkselect',
+    defaultValue: '',
+    multiple: true,
+    disabled: false,
+    clearable: false,
+    placeholder: '',
+    required: false,
+    requiredMessage: '',
+    validatorCheck: false,
+    validator: '',
+    showLabel: false,
+    width: '',
+    options: [
+      {
+        value: 'Option 1'
+      },
+      {
+        value: 'Option 2'
+      },{
+        value: 'Option 3'
+      }
+    ],
+    remote: false,
+    remoteType: 'datasource',
+    remoteOption: '',
+    filterable: false,
+    remoteOptions: [],
+    props: {
+      value: 'value',
+      label: 'label'
+    },
+    remoteFunc: '',
+    customClass: '',
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    customProps: {},
+    tip: ''
+  },
+  events: {
+    onChange: '',
+    onFocus: '',
+    onBlur: ''
+  }
+},
+//附件控件
+{
+  type: 'annex',
+  icon: 'icon-wenjianshangchuan',
+  options: {
+    acceptType:'all',//接收类型
+    defaultValue: [],
+    width: '',
+    tokenFunc: 'funcGetToken',
+    token: '',
+    tokenType: 'datasource',
+    domain: '',
+    disabled: false,
+    tip: '',
+    action: 'https://tools-server.making.link/api/transfer',
+    customClass: '',
+    limit: 9,
+    multiple: false,
+    isQiniu: false,
+    labelWidth: 100,
+    isLabelWidth: false,
+    hidden: false,
+    dataBind: true,
+    headers: [],
+    required: false,
+    validatorCheck: false,
+    validator: '',
+    withCredentials: false
+  },
+  events: {
+    onChange: '',
+    onSelect: '',
+    onUploadSuccess: '',
+    onUploadError: '',
+    onRemove: ''
+  }
+},
   {
     type: 'rate',
     icon: 'icon-pingfen1',
@@ -386,6 +672,37 @@ export const basicComponents = [
     },
     events: {
       onChange: ''
+    }
+  },
+  {
+    type: 'number',
+    icon: 'icon-number',
+    options: {
+      width: '',
+      required: false,
+      requiredMessage: '',
+      validatorCheck: false,
+      validator: '',
+      defaultValue: 0,
+      min: 0,
+      max: 9,
+      step: 1,
+      disabled: false,
+      controls: true,
+      controlsPosition: '',
+      customClass: '',
+      labelWidth: 100,
+      isLabelWidth: false,
+      hidden: false,
+      dataBind: true,
+      precision: 0,
+      customProps: {},
+      tip: ''
+    },
+    events: {
+      onChange: '',
+      onFocus: '',
+      onBlur: ''
     }
   },
   {
@@ -428,35 +745,6 @@ export const basicComponents = [
       hidden: false,
       dataBind: true,
       width: '',
-      customProps: {},
-      tip: ''
-    },
-    events: {
-      onChange: ''
-    }
-  },
-  {
-    type: 'slider',
-    icon: 'icon-slider',
-    options: {
-      imputMethod:'slider',
-      defaultValue: 0,
-      disabled: false,
-      required: false,
-      requiredMessage: '',
-      validatorCheck: false,
-      validator: '',
-      min: 0,
-      max: 100,
-      step: 1,
-      showInput: false,
-      range: false,
-      width: '',
-      customClass: '',
-      labelWidth: 100,
-      isLabelWidth: false,
-      hidden: false,
-      dataBind: true,
       customProps: {},
       tip: ''
     },

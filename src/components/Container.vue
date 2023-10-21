@@ -212,12 +212,13 @@
             </el-header>
             <el-main class="config-content">
               <!-- <el-scrollbar ref="configScroll"> -->
+<!-- 右侧字段属性 -->
                 <widget-config v-show="configTab=='widget'" ref="widgetConfig"
                   :platform="platform" 
                   :sheets="styleSheetsArray" 
                   :datasources="dataSourceArray" 
                   :eventscripts="eventScriptArray" 
-                  :data="widgetFormSelect" 
+                  :data="widgetFormSelect"
                   :key="widgetFormSelect ? widgetFormSelect.key : 0"
                   @on-event-add="handleEventAdd"
                   @on-event-edit="handleEventEdit"
@@ -356,7 +357,7 @@ export default {
     },
     basicFields: {
       type: Array,
-      default: () => ['input', 'textarea', 'number','valnum', 'radio', 'checkbox', 'time', 'date', 'rate', 'color', 'select', 'switch', 'slider', 'text', 'html', 'button', 'link', 'cascader', 'treeselect', 'steps', 'transfer', 'pagination']
+      default: () => ['input', 'valnum','amount','area','annex','email','phone', 'number', 'radio', 'checkbox', 'time', 'date', 'rate', 'color', 'select', 'switch', 'slider', 'text', 'html', 'button', 'link', 'cascader', 'treeselect', 'steps', 'transfer', 'pagination']
     },
     advanceFields: {
       type: Array,
@@ -678,7 +679,7 @@ export default {
     getJSON () {
       return this.widgetForm
     },
-    getHtml (type = 'html', ui = 'element') {
+    getHtml (type = 'html', ui = 'antd') {
       return generateCode(JSON.stringify(this.widgetForm), type, ui)
     },
     setJSON (json) {

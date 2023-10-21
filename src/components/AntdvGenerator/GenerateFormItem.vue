@@ -11,16 +11,33 @@
       :required="widget.options.required" ref="generateFormItem" :colon="config?.labelSuffix ? true : false"
       validateFirst>
       <div v-if="widget.options.tip" class="fm-item-tooltip" v-html="widget.options.tip.replace(/\n/g, '<br/>')"></div>
-      <generate-element-item :blanks="blanks" :is-table="isTable" :table-name="tableName" :widget="widget"
-        :models="dataModels" :remote="remote"
+      <generate-element-item 
+        :blanks="blanks" 
+        :is-table="isTable" 
+        :table-name="tableName" 
+        :widget="widget"
+        :models="dataModels" 
+        :remote="remote"
         :edit="edit && (isSubform || isTable ? !subDisabledFields[rowIndex][widget.model] : true)"
-        :remote-option="remoteOption" :key="widget.key" :rules="rules" v-model="dataModel" :platform="platform"
-        :preview="preview" :data-source-value="dataSourceValue" :event-function="eventFunction"
-        :container-key="containerKey" :print-read="printRead" :config="config" :is-subform="isSubform"
-        :row-index="rowIndex" :sub-name="subName" :is-dialog="isDialog" :dialog-name="dialogName"
-        ref="generateElementItem" :is-group="isGroup" :group="group"
+        :remote-option="remoteOption" 
+        :key="widget.key" 
+        :rules="rules" 
+        v-model="dataModel" 
+        :platform="platform"
+        :preview="preview" 
+        :data-source-value="dataSourceValue" 
+        :event-function="eventFunction"
+        :container-key="containerKey" 
+        :print-read="printRead" 
+        :config="config" :is-subform="isSubform"
+        :row-index="rowIndex" 
+        :sub-name="subName" 
+        :is-dialog="isDialog" 
+        :dialog-name="dialogName"
+        ref="generateElementItem" 
+        :is-group="isGroup" 
+        :group="group"
         :field-node="fieldNode ? fieldNode + '.' + widget.model : widget.model">
-
         <template v-slot:[blank.name]="scope" v-for="blank in blanks">
           <slot :name="blank.name" :model="scope.model"></slot>
         </template>
@@ -106,8 +123,6 @@ export default {
     dataModel: {
       deep: true,
       handler(val, oldValue) {
-        console.log(this.models,777);
-        console.log(this.widget,888);
         if (this.isTable) {
           this.setTableData(val, this.rowIndex, this.widget.model)
         } else if (this.isSubform) {
